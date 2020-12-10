@@ -1,33 +1,33 @@
 const router = require('express').Router();
-const Coustomer = require('../models/customer');
+const Order = require('../models/order');
 
 
 
-//TODO :ADD COUSTOMER
+//TODO :ADD order
 router.post('/', async (req, res, next) => {
     try {
         const value = req.body;
-        const inserted = await Coustomer.insertMany(value);
+        const inserted = await Order.insertMany(value);
         res.json(inserted);
     } catch (error) {
         next(error);
     }
 });
-//TODO :GET COUSTOMER
+//TODO :GET order
 router.get('/', async (req, res, next) => {
     try {
-        const value = await Coustomer.find({});
+        const value = await Order.find({});
         console.log(value);
         return res.json(value)
     } catch (error) {
         next(error);
     }
 });
-//TODO :GET COUSTOMER BY ID
+//TODO :GET order BY ID
 router.get('/:id', async (req, res, next) => {
     try {
         const { id } = req.params;
-        const value = await Coustomer.findById({
+        const value = await Order.findById({
             _id: id
         })
         res.json(value);
@@ -36,11 +36,11 @@ router.get('/:id', async (req, res, next) => {
     }
 });
 
-//TODO : DELETE A COUSTOMER BY ID 
+//TODO : DELETE A order BY ID 
 router.delete('/:id', async (req, res, next) => {
     try {
         const { id } = req.params;
-        const deleteItem = await Coustomer.findByIdAndRemove({
+        const deleteItem = await Order.findByIdAndRemove({
             _id: id
         });
         if (!deleteItem) return next(error);
@@ -49,16 +49,16 @@ router.delete('/:id', async (req, res, next) => {
         next(error);
     }
 });
-//TODO :UPDATE COUSTOMER BY ID
+//TODO :UPDATE order BY ID
 router.put('/:id', async (req, res, next) => {
     try {
         const { id } = req.params;
         const value = await req.body;
-        const item = await Coustomer.findOne({
+        const item = await Order.findOne({
             _id: id
         });
         if (!item) return next(error);
-        await Coustomer.updateOne({
+        await Order.updateOne({
             _id: id
         }, {
             $set: value
