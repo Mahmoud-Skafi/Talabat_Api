@@ -11,6 +11,7 @@ const restaurantschema = new Schema({
   lon: { type: String },
   phone: { type: String },
   image: { type: String },
+  rating: { type: Number, required: true, max: 10 }
 }
   , { collection: "restaurants" });
 /*
@@ -22,7 +23,8 @@ const restaurantschema = new Schema({
   "lat": "122°05'06.24 ",
   "long": "37°25'19.07",
   "phone": "059902829",
-  "image":"../public/images/1.jpg"
+  "image":"../public/images/1.jpg",
+  "rating":9
 }
 */
 module.exports = mongoose.model('restaurants', restaurantschema,);
