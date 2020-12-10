@@ -7,6 +7,7 @@ const coustomerchema = new Schema({
     first_name: { type: String, min: 4, max: 25, required: true, trim: true },
     last_name: { type: String, min: 4, max: 25, required: true, trim: true },
     phone: { type: String, required: true, trim: true },
+
 },
     {
         collection: 'coustomers'
