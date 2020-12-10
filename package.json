@@ -1,0 +1,23 @@
+{
+  "name": "dummydata",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "cd ./server/src && nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.10.18",
+    "nodemon": "^2.0.5",
+    "request": "^2.88.2",
+    "sharp": "^0.26.2"
+  }
+}
