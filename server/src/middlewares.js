@@ -14,8 +14,20 @@ function errorHandler(err, req, res, next) {
         stack: process.env.NODE_ENV === 'production' ? '🥞' : err.stack
     });
 }
-
+function verifyToken(req, res, next) {
+    if (!req.headers.Authorization)
+        return res.status(401).send('Unauthorized Request');
+    const token = req.headers.Authorization;
+    if (token === 'null')
+        return res.status(401).send('Unauthorized Request');
+    let payload = jwt.verify(token, 'skafips');
+    if (!payload)
+        return res.status(401).send('Unauthorized Request');
+    req.userId = payload.subject;
+    next();
+}
 module.exports = {
     notFound,
-    errorHandler
+    errorHandler,
+    verifyToken
 };

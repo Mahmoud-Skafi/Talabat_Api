@@ -10,7 +10,7 @@ const orderschema = new Schema({
     quantity: { type: Number, required: true },
     address: { type: String, required: true, trim: true },
     phone: { type: String, required: true, trim: true },
-    order_date: { type: Date, required: true }
+    order_date: { type: Date, required: true, default: Date.now() }
 },
     {
         collection: 'orders'

@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Admin = require('../models/admin');
-
+const jwt = require('jsonwebtoken');
+const { verifyToken } = require('../middlewares');
 
 
 //TODO :ADD admin
@@ -64,6 +65,57 @@ router.put('/:id', async (req, res, next) => {
             $set: value
         });
         res.json(value);
+    } catch (error) {
+        next(error);
+    }
+});
+//TODO :CREATE NEW ADMIN USER
+router.post('/register', async (req, res, next) => {
+    try {
+        const value = await req.body;
+        Admin.findOne({ email: value.email }, (err, user) => {
+            if (err) next(err);
+            if (user.email == value.email) res.status(401).send('Invalid email');
+            else {
+                const user = new Admin(value);
+                user.save((err, registerData) => {
+                    if (err) next(err);
+                    else {
+                        // let payload = { subject: registerData._id };
+                        // let token = jwt.sign(payload, 'skafips')
+                        res.status(201).send(registerData);
+                    }
+                })
+            }
+        })
+
+
+    } catch (error) {
+        next(error);
+    }
+});
+//TODO :LOGIN 
+router.post('/login', async (req, res, next) => {
+
+    try {
+        let value = await req.body;
+        console.log(value);
+        Admin.findOne({ user_name: value.user_name }, (err, user) => {
+            if (err) next(err);
+            else {
+                if (!user) res.status(401).send('Invalid user name')
+                else {
+                    if (user.password !== value.password) res.status(401).send('Invalid password');
+                    else {
+                        let payload = { subject: user._id };
+                        let token = jwt.sign(payload, 'skafips')
+                        res.status(200).send({ token });
+
+                    }
+                }
+            }
+
+        })
     } catch (error) {
         next(error);
     }

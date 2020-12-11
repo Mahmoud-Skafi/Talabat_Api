@@ -1,10 +1,11 @@
 const router = require('express').Router();
+const { verifyToken } = require('../middlewares');
 const Restaurant = require('../models/restaurant');
 
 
 
 //TODO :ADD RESTAURANT
-router.post('/', async (req, res, next) => {
+router.post('/', verifyToken, async (req, res, next) => {
     try {
         const value = req.body;
         const inserted = await Restaurant.insertMany(value);
