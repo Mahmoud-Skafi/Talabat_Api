@@ -5,7 +5,7 @@ const Restaurant = require('../models/restaurant');
 
 
 //TODO :ADD RESTAURANT
-router.post('/', verifyToken, async (req, res, next) => {
+router.post('/', async (req, res, next) => {
     try {
         const value = req.body;
         const inserted = await Restaurant.insertMany(value);
@@ -15,7 +15,7 @@ router.post('/', verifyToken, async (req, res, next) => {
     }
 });
 //TODO :GET RESTAURANT
-router.get('/', async (req, res, next) => {
+router.get('/', verifyToken, async (req, res, next) => {
     try {
         const value = await Restaurant.find({});
         console.log(value);

@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 function notFound(req, res, next) {
     res.status(404);
     const error = new Error(`🔍 - Not Found - ${req.originalUrl}`);
@@ -15,15 +16,16 @@ function errorHandler(err, req, res, next) {
     });
 }
 function verifyToken(req, res, next) {
-    if (!req.headers.Authorization)
-        return res.status(401).send('Unauthorized Request');
-    const token = req.headers.Authorization;
+    // console.log(req.headers.authorization)
+    if (!req.headers.authorization)
+        return res.status(401).send('Unauthorized Request1');
+    const token = req.headers.authorization;
     if (token === 'null')
-        return res.status(401).send('Unauthorized Request');
+        return res.status(401).send('Unauthorized Request2');
     let payload = jwt.verify(token, 'skafips');
     if (!payload)
-        return res.status(401).send('Unauthorized Request');
-    req.userId = payload.subject;
+        return res.status(401).send('Unauthorized Request3');
+    // req._id = payload.subject;
     next();
 }
 module.exports = {

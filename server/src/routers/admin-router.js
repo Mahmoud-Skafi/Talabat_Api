@@ -72,23 +72,23 @@ router.put('/:id', async (req, res, next) => {
 //TODO :CREATE NEW ADMIN USER
 router.post('/register', async (req, res, next) => {
     try {
-        const value = await req.body;
-        Admin.findOne({ email: value.email }, (err, user) => {
-            if (err) next(err);
-            if (user.email == value.email) res.status(401).send('Invalid email');
+        let value = await req.body;
+        // Admin.findOne({ email: value.email }, (err, user) => {
+        //     console.log(user)
+        //     if (err) {
+        //         // next(err);
+        //     }
+        //     if (user) res.status(401).send('Invalid email');
+        // })
+        let userData = new Admin(value);
+        userData.save((errr, registerData) => {
+            if (errr) next(errr);
             else {
-                const user = new Admin(value);
-                user.save((err, registerData) => {
-                    if (err) next(err);
-                    else {
-                        // let payload = { subject: registerData._id };
-                        // let token = jwt.sign(payload, 'skafips')
-                        res.status(201).send(registerData);
-                    }
-                })
+                // let payload = { subject: registerData._id };
+                // let token = jwt.sign(payload, 'skafips')
+                res.status(201).send(registerData);
             }
         })
-
 
     } catch (error) {
         next(error);
@@ -110,7 +110,6 @@ router.post('/login', async (req, res, next) => {
                         let payload = { subject: user._id };
                         let token = jwt.sign(payload, 'skafips')
                         res.status(200).send({ token });
-
                     }
                 }
             }

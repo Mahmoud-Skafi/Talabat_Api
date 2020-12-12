@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const adminschema = new Schema({
-    // _id: { type: Number, required: true },
+    // _id: { type: Number, required: true ,auto},
     user_name: { type: String, min: 4, max: 25, required: true, trim: true },
     email: { type: String, unique: false, required: true, trim: true, },
     password: { type: String, required: true },
