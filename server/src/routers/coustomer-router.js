@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Coustomer = require('../models/customer');
-
+const jwt = require('jsonwebtoken');
+const { verifyToken } = require('../middlewares');
 
 
 //TODO :ADD COUSTOMER
@@ -64,6 +65,48 @@ router.put('/:id', async (req, res, next) => {
             $set: value
         });
         res.json(value);
+    } catch (error) {
+        next(error);
+    }
+});
+//TODO :CREATE NEW ADMIN USER
+router.post('/register', async (req, res, next) => {
+    try {
+        let value = await req.body;
+        let userData = new Coustomer(value);
+        userData.save((errr, registerData) => {
+            if (errr) next(errr);
+            else {
+
+                res.status(201).send(registerData);
+            }
+        })
+
+    } catch (error) {
+        next(error);
+    }
+});
+//TODO :LOGIN 
+router.post('/login', async (req, res, next) => {
+
+    try {
+        let value = await req.body;
+        console.log(value);
+        Coustomer.findOne({ email: value.email }, (err, user) => {
+            if (err) next(err);
+            else {
+                if (!user) res.status(401).send('Invalid email')
+                else {
+                    if (user.password !== value.password) res.status(401).send('Invalid password');
+                    else {
+                        let payload = { subject: user._id };
+                        let token = jwt.sign(payload, 'skafips')
+                        res.status(200).send({ token });
+                    }
+                }
+            }
+
+        })
     } catch (error) {
         next(error);
     }
