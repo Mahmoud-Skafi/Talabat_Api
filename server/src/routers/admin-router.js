@@ -107,7 +107,7 @@ router.post('/login', async (req, res, next) => {
                 else {
                     if (user.password !== value.password) res.status(401).send('Invalid password');
                     else {
-                        let payload = { subject: user._id };
+                        let payload = { role: "admin", subject: user._id };
                         let token = jwt.sign(payload, 'skafips')
                         res.status(200).send({ token });
                     }

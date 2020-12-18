@@ -15,7 +15,7 @@ router.post('/', async (req, res, next) => {
     }
 });
 //TODO :GET RESTAURANT
-router.get('/', verifyToken, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
     try {
         const value = await Restaurant.find({});
         console.log(value);

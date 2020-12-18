@@ -25,8 +25,11 @@ function verifyToken(req, res, next) {
     let payload = jwt.verify(token, 'skafips');
     if (!payload)
         return res.status(401).send('Unauthorized Request3');
+    if (!payload.role == 'admin')
+        return res.status(401).send('Unauthorized Request3');
+    else
+        next();
     // req._id = payload.subject;
-    next();
 }
 module.exports = {
     notFound,

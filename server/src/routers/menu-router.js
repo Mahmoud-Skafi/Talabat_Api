@@ -43,6 +43,18 @@ router.get('/:id', async (req, res, next) => {
         next(error);
     }
 });
+//TODO : GET All Res Menu BY ID 
+router.get('/res/:id', async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const value = await Menu.find({
+            res_id: id
+        })
+        res.json(value);
+    } catch (error) {
+        next(error);
+    }
+});
 
 //TODO : DELETE A Menu BY ID 
 router.delete('/:id', async (req, res, next) => {
